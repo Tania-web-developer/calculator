@@ -1,23 +1,36 @@
-import logo from './logo.svg';
+
 import './App.css';
+import Counters from './components/counters/Counters';
+import Info from './components/info/Info';
+
+import { useState, createContext } from "react";
+export const Context = createContext();
 
 function App() {
+
+  const [result, setResult] = useState(0);
+
+  function countRootSq() {
+    setResult(Math.pow(result, 2));
+  }
+  function countByOne() {
+    setResult(result + 1);
+  }
+  function countByTen() {
+    setResult(result + 10);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Context.Provider value={{
+        countRootSq: countRootSq,
+        countByOne: countByOne,
+        countByTen: countByTen,
+        result: result,
+      }}>
+        <Info />
+        <Counters />
+      </Context.Provider>
     </div>
   );
 }
